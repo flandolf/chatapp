@@ -1,47 +1,60 @@
-# Svelte + TS + Vite
+# Svelte Chat Web App
+This is a simple chat web application built with Svelte, allowing users to send and receive messages in real-time.
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+## Features
+- Real-time messaging
+- User authentication
+- Auto-scroll to the bottom of the chat
+- Character count for message input
+- Delete messages (for the message author only)
+Responsive design
 
-## Recommended IDE Setup
-
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
-
-## Need an official Svelte framework?
-
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
-
-## Technical considerations
-
-**Why use this over SvelteKit?**
-
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
-
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
-
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
-
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
-
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `allowJs` in the TS template?**
-
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
+## Requirements
+Node.js 12.x or later
+## Getting Started
+1. Clone the repository:
+```bash
+git clone https://github.com/flandolf/chatapp.git
+cd chatapp
 ```
+2. Install dependencies:
+```bash
+yarn
+```
+3. Set up your pocketbase backend and create a `.env` file and put this in it:
+```
+URL=https://example.com
+```
+
+4. Start the development server:
+
+```bash
+npm run dev
+```
+or
+```bash
+yarn dev
+```
+This will open a new browser window, and the application should be running.
+
+## Deployment
+To deploy the application, follow these steps:
+
+Build the production version of the application:
+
+```bash
+npm run build
+```
+or 
+```bash
+yarn build
+```
+This will create a `dist/` folder containing the optimized build files.
+
+Deploy the public folder to your preferred hosting platform (e.g., Vercel, Netlify, Firebase Hosting, etc.). Follow the deployment instructions for the chosen platform.
+
+## Contributing
+We welcome contributions to improve the Svelte Chat Web App. Please feel free to submit issues, fork the repository and send pull requests!
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
