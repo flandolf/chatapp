@@ -1,8 +1,13 @@
 import PocketBase from 'pocketbase';
-
 import { writable } from 'svelte/store';
 
-export const pb = new PocketBase('https://pb.dumpy.gq');
+// import dotenv
+import dotenv from 'dotenv';
+
+// load environment variables
+dotenv.config();
+
+export const pb = new PocketBase(process.env.URL);
 
 export const currentUser = writable(pb.authStore.model);
 
