@@ -28,12 +28,31 @@
   }
 </script>
 
+<style>
+  .login-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+  }
+  .logout-btn {
+    border: none;
+    border-radius: 0.4rem;
+    background-color: #ff3e00;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    height: 1.5rem;
+    align-self: center;
+    margin: 0.3rem;
+  }
+</style>
+
 <div class="login-container">
   {#if $currentUser}
     <p class="logged-in">
       Logged in as <strong>{$currentUser.username}</strong>
     </p>
-    <button on:click={logout}>Logout</button>
+    <button class="logout-btn" on:click={logout}>Logout</button>
   {:else}
     <form on:submit|preventDefault class="buttons login-form">
       <input type="text" placeholder="Name" class="login-input" bind:value={name} />

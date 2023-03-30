@@ -56,132 +56,130 @@
       charCount.textContent = `${remainingChars}`;
     }
   }
+  function handleKeyDown(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      sendMessage();
+    }
+  }
 </script>
 
-{#if $currentUser}
-  <div class="messages" bind:this={messagesContainer}>
-    {#each $messages as message (message.id)}
-      <div class="msg">
-        <div class="msg__user">
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+  .chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 70vh;
+    width: 100%;
+    background-color: #f5f5f5;
+  }
+
+  .messages-container {
+    flex: 1;
+    overflow-y: scroll;
+    padding: 10px;
+  }
+
+  .message {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    overflow: hidden;
+    flex-wrap: wrap;
+  }
+
+  .message img {
+    margin-right: 10px;
+  }
+
+  .username {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  .message-text {
+    flex: 1;
+  }
+
+  .input-container {
+    display: flex;
+    padding: 10px;
+  }
+
+  .input-box {
+    flex: 1;
+    padding: 5px;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+  }
+
+  .send-btn {
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-left: 5px;
+    padding: 5px 10px;
+    border-radius: 15px;
+  }
+
+  .delete-btn {
+    background-color: #f44336;
+    color: white;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-left: 5px;
+    padding: 5px 10px;
+    border-radius: 15px;
+  }
+
+  #charCount {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+  }
+</style>
+
+<div class="chat-container">
+  <div class="messages-container" bind:this={messagesContainer}>
+    {#each $messages as message}
+      <div class="message">
+        <div>
           <img
-            id="avatar"
-            src={`https://avatars.dicebear.com/api/identicon/${message.expand?.user?.username}.svg`}
-            alt={message.user.name}
-            width="40px"
-          />
+          id="avatar"
+          src={`https://avatars.dicebear.com/api/identicon/${message.expand?.user?.username}.svg`}
+          alt={message.user.name}
+          width="40px"
+        />
+        <div class="username">{message.expand?.user?.username}</div>
         </div>
-        <div class="msg__content">
-          <div class="header">
-            <small
-              >Sent by <strong style="color:blue"
-                >@{message.expand?.user?.username}</strong
-              ></small
-            >
-            {#if message.expand?.user?.id === $currentUser.id}
-              <div class="msg__content__delete">
-                <button
-                  class="delete-btn"
-                  on:click={() => deleteMessage(message.id)}>Delete</button
-                >
-              </div>
-            {/if}
-          </div>
-          <div class="msg__content__text">{message.text}</div>
-        </div>
+        <div class="message-text">{message.text}</div>
+        <button class="delete-btn" on:click={() => deleteMessage(message.id)}
+          >Delete</button
+        >
       </div>
     {/each}
   </div>
   <div class="input-container">
     <input
-      id="sendMessage"
-      type="text"
+      class="input-box"
+      placeholder="Type your message..."
       bind:value={newMessage}
-      placeholder="Type your message here..."
-      maxlength={maxChars}
       on:input={updateCharCount}
+      maxlength={maxChars}
+      on:keydown={handleKeyDown}
     />
-    <span id="charCount">{maxChars}</span>
-    <button type="submit" on:click={sendMessage}>Send</button>
+    <div id="charCount">{maxChars}</div>
+    <button
+      class="send-btn"
+      on:click={sendMessage}
+      disabled={!newMessage || newMessage.trim() === ""}
+    >
+      Send
+    </button>
   </div>
-{/if}
-
-<style>
-  .input-container {
-    display: flex;
-    align-items: center;
-    margin-top: 8px;
-  }
-
-  #charCount {
-    font-size: 18px;
-    color: #666;
-    margin-left: 8px;
-  }
-
-  .msg {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    border-radius: 8px;
-    width: 100%;
-    align-self: center;
-    margin-bottom: 16px;
-  }
-
-  .msg__user {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px;
-  }
-
-  .msg__content {
-    display: flex;
-    flex-direction: column;
-    padding: 8px;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    width: 100%;
-  }
-
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 4px;
-  }
-
-  .msg__content__delete {
-    margin-left: auto;
-  }
-
-  .delete-btn {
-    background: none;
-    color: red;
-    border: none;
-    cursor: pointer;
-  }
-
-  .msg__content__text {
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-  }
-
-  input#sendMessage {
-    flex-grow: 1;
-    margin-right: 8px;
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-
-  button[type="submit"] {
-    background-color: rgb(0, 153, 255);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 16px;
-    cursor: pointer;
-  }
-</style>
+</div>
