@@ -1,0 +1,5 @@
+yarn build
+cd dist
+sudo rm -rf /var/www/chatapp/*
+sudo cp * -r /var/www/chatapp
+sudo chown www-data:www-data /var/www/chatapp

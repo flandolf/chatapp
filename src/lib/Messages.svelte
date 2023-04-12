@@ -3,7 +3,7 @@
   import { currentUser, pb } from "./pocketbase";
   import { writable } from "svelte/store";
 
-  const messages = writable([]);
+  export const msgs = writable([]);
 
   let newMessage: string;
   let messagesContainer: HTMLElement;
@@ -18,7 +18,7 @@
       sort: "created",
       expand: "user",
     });
-    messages.set(resultList.items);
+    msgs.set(resultList.items);
   }
 
   async function sendMessage() {
@@ -27,18 +27,21 @@
       user: $currentUser.id,
     };
     const createdMessage = await pb.collection("messages").create(data);
-    messages.update((items) => [...items, createdMessage]);
+    msgs.update((items) => [...items, createdMessage]);
     scrollToBottom();
     await getMessages(); // call getMessages() to update the new message's user property
   }
 
   async function deleteMessage(messageId: string) {
     await pb.collection("messages").delete(messageId);
-    messages.update((items) => items.filter((m) => m.id !== messageId));
+    msgs.update((items) => items.filter((m) => m.id !== messageId));
   }
 
   afterUpdate(() => {
     scrollToBottom();
+    if (!currentUser) {
+      msgs.set([])
+    }
   });
 
   function scrollToBottom() {
@@ -63,6 +66,51 @@
     }
   }
 </script>
+
+{#if currentUser}
+  <div class="chat-container">
+    <div class="messages-container" bind:this={messagesContainer}>
+      {#each $msgs as message}
+        <div class="message">
+          <div>
+            <img
+              id="avatar"
+              src={`https://avatars.dicebear.com/api/identicon/${message.expand?.user?.username}.svg`}
+              alt={message.user.name}
+              width="40px"
+            />
+            <div class="username">{message.expand?.user?.username}</div>
+          </div>
+          <div class="message-text">{message.text}</div>
+          {#if $currentUser.id === message?.expand?.user?.id}
+            <button
+              class="delete-btn"
+              on:click={() => deleteMessage(message.id)}>Delete</button
+            >
+          {/if}
+        </div>
+      {/each}
+    </div>
+    <div class="input-container">
+      <input
+        class="input-box"
+        placeholder="Type your message..."
+        bind:value={newMessage}
+        on:input={updateCharCount}
+        maxlength={maxChars}
+        on:keydown={handleKeyDown}
+      />
+      <div id="charCount">{maxChars}</div>
+      <button
+        class="send-btn"
+        on:click={sendMessage}
+        disabled={!newMessage || newMessage.trim() === ""}
+      >
+        Send
+      </button>
+    </div>
+  </div>
+{/if}
 
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
@@ -143,43 +191,3 @@
     margin-left: 10px;
   }
 </style>
-
-<div class="chat-container">
-  <div class="messages-container" bind:this={messagesContainer}>
-    {#each $messages as message}
-      <div class="message">
-        <div>
-          <img
-          id="avatar"
-          src={`https://avatars.dicebear.com/api/identicon/${message.expand?.user?.username}.svg`}
-          alt={message.user.name}
-          width="40px"
-        />
-        <div class="username">{message.expand?.user?.username}</div>
-        </div>
-        <div class="message-text">{message.text}</div>
-        <button class="delete-btn" on:click={() => deleteMessage(message.id)}
-          >Delete</button
-        >
-      </div>
-    {/each}
-  </div>
-  <div class="input-container">
-    <input
-      class="input-box"
-      placeholder="Type your message..."
-      bind:value={newMessage}
-      on:input={updateCharCount}
-      maxlength={maxChars}
-      on:keydown={handleKeyDown}
-    />
-    <div id="charCount">{maxChars}</div>
-    <button
-      class="send-btn"
-      on:click={sendMessage}
-      disabled={!newMessage || newMessage.trim() === ""}
-    >
-      Send
-    </button>
-  </div>
-</div>
