@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { onMount, onDestroy, afterUpdate } from "svelte";
+    import { onMount, afterUpdate } from "svelte";
     import { currentUser, pb } from "./pocketbase";
     import { writable } from "svelte/store";
     import "../styles/Messages.css";

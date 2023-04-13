@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { Button } from "@svelteuidev/core";
     import { currentUser, pb } from "./pocketbase";
     import "../styles/Login.css";
     let username: string;
