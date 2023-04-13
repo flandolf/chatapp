@@ -11,6 +11,8 @@
     onMount(async () => {
         await getMessages();
         scrollToBottom();
+
+        setInterval(getMessages, 5500);
     });
 
     async function getMessages() {
@@ -30,6 +32,7 @@
         msgs.update((items) => [...items, createdMessage]);
         scrollToBottom();
         await getMessages(); // call getMessages() to update the new message's user property
+        newMessage = "";
     }
 
     async function deleteMessage(messageId: string) {
@@ -63,6 +66,8 @@
         if (event.key === "Enter" && !event.shiftKey) {
             event.preventDefault();
             sendMessage();
+            // Clear the input field
+            newMessage = "";
         }
     }
 </script>
@@ -130,6 +135,8 @@
         flex-direction: column;
         height: 70vh;
         width: 100%;
+        background-color: var(--bg-color);
+        color: var(--text-color);
     }
 
     .messages-container {
@@ -173,6 +180,8 @@
         border-radius: 15px;
         outline: none;
         border: none;
+        background-color: var(--bg-color);
+        color: var(--text-color);
     }
 
     .send-btn {

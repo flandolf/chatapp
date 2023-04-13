@@ -73,7 +73,10 @@
         display: flex;
         flex-direction: row;
         height: 100%;
+        background-color: var(--bg-color);
+        color: var(--text-color);
     }
+
     .logout-btn {
         border: none;
         border-radius: 0.4rem;
