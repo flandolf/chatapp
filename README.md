@@ -21,10 +21,7 @@ cd chatapp
 ```bash
 yarn
 ```
-3. Set up your pocketbase backend and create a `.env` file and put this in it:
-```
-URL=https://example.com
-```
+3. Set up your pocketbase backend and edit the url in `src/lib/pocketbase.ts`.   
 
 4. Start the development server:
 
