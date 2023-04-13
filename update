@@ -1,4 +1,4 @@
-yarn build
+bun run build
 cd dist
 sudo rm -rf /var/www/chatapp/*
 sudo cp * -r /var/www/chatapp
