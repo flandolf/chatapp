@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Login from "./lib/Login.svelte";
-  import Messages from "./lib/Messages.svelte";
+    import Login from "./lib/Login.svelte";
+    import Messages from "./lib/Messages.svelte";
 </script>
 
 <h1>flandy's chat.</h1>
@@ -8,5 +8,5 @@
 <Messages />
 
 <footer style="font-size: 10pt;">
-  (c) 2023 andy wang | backend on pocketbase | made with ❤️ in melbourne
+    (c) 2023 andy wang | backend on <a href="https://pocketbase.io">pocketbase</a> | made with ❤️ in melbourne
 </footer>
