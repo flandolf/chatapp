@@ -1,4 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+
+:root {
+    --bg-color: #f5f5f5;
+    --text-color: #333;
+    --primary: #007bff;
+    --secondary: #fff;
+}
+
 .chat-container {
     display: flex;
     flex-direction: column;
@@ -6,6 +14,7 @@
     width: 100%;
     background-color: var(--bg-color);
     color: var(--text-color);
+    font-family: "Roboto", sans-serif;
 }
 
 .messages-container {
@@ -54,7 +63,7 @@
     overflow: hidden;
     background-color: var(--primary);
     color: var(--secondary);
-    height: 4vh;
+    height: 3vh;
     padding-left: 2.4wh;
     padding-right: 2.4wh;
     border-radius: 45px;
@@ -106,4 +115,37 @@
     justify-content: center;
     align-items: center;
     margin-right: 10px;
+}
+
+/* Media queries for mobile responsiveness */
+@media (max-width: 768px) {
+    .input-box {
+        font-size: 14px;
+    }
+
+    .btn {
+        font-size: 14px;
+        height: 3vh;
+        width: 90px;
+    }
+
+    .message {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 425px) {
+    .input-box {
+        font-size: 12px;
+    }
+
+    .btn {
+        font-size: 12px;
+        height: 3vh;
+        width: 80px;
+    }
+
+    .message {
+        font-size: 12px;
+    }
 }

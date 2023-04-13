@@ -60,7 +60,7 @@
 <Login />
 <Messages />
 
-<footer style="font-size: 10pt;">
+<footer class="text-s text-center">
     (c) 2023 andy wang | backend on <a href="https://pocketbase.io"
         >pocketbase</a
     > | made with ❤️ in melbourne

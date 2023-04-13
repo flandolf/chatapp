@@ -12,7 +12,7 @@
         await getMessages();
         scrollToBottom();
 
-        setInterval(getMessages, 5500);
+        setInterval(getMessages, 3000);
     });
 
     async function getMessages() {
