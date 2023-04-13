@@ -1,0 +1,62 @@
+:root {
+    --primary: #302d38;
+    --secondary: #d0bcff;
+}
+input {
+    border: none;
+    border-radius: 0.4rem;
+    background-color: var(--primary);
+    color: var(--secondary);
+    font-size: 1rem;
+    padding: 0.5rem;
+    margin: 0.3rem;
+    height: 1.5rem;
+}
+
+.login-btn {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--primary);
+    color: var(--secondary);
+    height: 3vh;
+    padding-left: 2.4wh;
+    border-radius: 45px;
+    width: 10vw;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: var(--secondary);
+    color: var(--primary);
+}
+
+.login-btn:active {
+    background-color: var(--primary);
+    color: var(--secondary);
+}
+
+.login-btn::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 50%;
+    transform: scale(1) translate(-50%, -50%);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.login-btn:active::after {
+    opacity: 1;
+    transform: scale(100) translate(-50%, -50%);
+    transition: opacity 0s, transform 0.3s;
+}
+
+::placeholder {
+    color: var(--secondary);
+}

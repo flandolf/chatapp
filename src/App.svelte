@@ -2,11 +2,28 @@
     import Login from "./lib/Login.svelte";
     import Messages from "./lib/Messages.svelte";
     import { writable } from "svelte/store";
-
+    import "./styles/app.css";
+    import { onMount } from "svelte";
     const isDarkMode = writable(false);
+
+    onMount(() => {
+        const isDarkModeFromLocalStorage = JSON.parse(
+            localStorage.getItem("isDarkMode")
+        );
+        if (isDarkModeFromLocalStorage) {
+            isDarkMode.set(isDarkModeFromLocalStorage);
+            // @ts-ignore
+            document.getElementById("dark-mode-toggle").checked = true;
+        }
+    });
+
+    function updateLocalStorage() {
+        localStorage.setItem("isDarkMode", JSON.stringify($isDarkMode));
+    }
 
     function toggleDarkMode() {
         isDarkMode.update((value) => !value);
+        updateLocalStorage();
     }
 </script>
 
@@ -14,8 +31,8 @@
     {#if $isDarkMode}
         <style>
             :root {
-                --bg-color: #1a1a1a;
-                --text-color: #f5f5f5;
+                --bg-color: #1a1c1e;
+                --text-color: #e3e2e6;
             }
         </style>
     {:else}
@@ -28,10 +45,15 @@
     {/if}
 </svelte:head>
 
-<div style="text-align: center;">
+<div class="text-center text-xl mt-3">
     <h1>flandy's chat.</h1>
-    <label class="dark-mode-switch">
-        <input type="checkbox" on:change={toggleDarkMode} />
+    <p class="text-xs mt-5">Dark Mode</p>
+    <label class="dark-mode-switch mt-1">
+        <input
+            type="checkbox"
+            on:change={toggleDarkMode}
+            id="dark-mode-toggle"
+        />
         <span class="slider" />
     </label>
 </div>
@@ -46,6 +68,8 @@
 
 <style>
     :root {
+        --primary: #553f5c;
+        --secondary: #f7d8fe;
         background-color: var(--bg-color);
         color: var(--text-color);
     }
@@ -67,7 +91,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: #ccc;
+        background-color: #553f5c;
         transition: 0.4s;
         border-radius: 34px;
     }
@@ -79,13 +103,13 @@
         width: 26px;
         left: 4px;
         bottom: 4px;
-        background-color: white;
+        background-color: var(--secondary);
         transition: 0.4s;
         border-radius: 50%;
     }
 
     input:checked + .slider {
-        background-color: #2196f3;
+        background-color: var(--primary);
     }
 
     input:checked + .slider:before {

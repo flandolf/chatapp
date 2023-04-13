@@ -2,7 +2,7 @@
     import { onMount, onDestroy, afterUpdate } from "svelte";
     import { currentUser, pb } from "./pocketbase";
     import { writable } from "svelte/store";
-
+    import "../styles/Messages.css";
     export const msgs = writable([]);
 
     let newMessage: string;
@@ -76,22 +76,19 @@
     <div class="chat-container">
         <div class="messages-container" bind:this={messagesContainer}>
             {#each $msgs as message}
-                <div class="message">
-                    <div class="avatar-username-container">
+                <div class="message w-full mb-3">
+                    <div class="flex flex-col items-center mr-3">
                         <img
-                            id="avatar"
                             src={`https://avatars.dicebear.com/api/identicon/${message.expand?.user?.username}.svg`}
                             alt={message.user.name}
                             width="40px"
                         />
-                        <div class="username">
-                            {message.expand?.user?.username}
-                        </div>
+                        {message.expand?.user?.username}
                     </div>
                     <div class="message-text">{message.text}</div>
                     {#if $currentUser.id === message?.expand?.user?.id}
                         <button
-                            class="delete-btn"
+                            class="btn"
                             on:click={() => deleteMessage(message.id)}
                             >Delete</button
                         >
@@ -108,9 +105,9 @@
                 maxlength={maxChars}
                 on:keydown={handleKeyDown}
             />
-            <div id="charCount">{maxChars}</div>
+            <div id="charCount" class="mr-3">{maxChars}</div>
             <button
-                class="send-btn"
+                class="btn"
                 on:click={sendMessage}
                 disabled={!newMessage || newMessage.trim() === ""}
             >
@@ -127,97 +124,3 @@
         </div>
     </div>
 {/if}
-
-<style>
-    @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
-    .chat-container {
-        display: flex;
-        flex-direction: column;
-        height: 70vh;
-        width: 100%;
-        background-color: var(--bg-color);
-        color: var(--text-color);
-    }
-
-    .messages-container {
-        flex: 1;
-        overflow-y: scroll;
-        padding: 10px;
-    }
-
-    .message {
-        display: flex;
-        align-items: center;
-        margin-bottom: 5px;
-        overflow: hidden;
-        flex-wrap: wrap;
-    }
-
-    .message img {
-        margin-right: 10px;
-    }
-
-    .username {
-        font-weight: bold;
-        margin-right: 10px;
-    }
-
-    .message-text {
-        flex: 1;
-    }
-
-    .input-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: row;
-        padding: 10px;
-    }
-
-    .input-box {
-        flex: 1;
-        padding: 5px;
-        border-radius: 15px;
-        outline: none;
-        border: none;
-        background-color: var(--bg-color);
-        color: var(--text-color);
-    }
-
-    .send-btn {
-        background-color: #2196f3;
-        color: white;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        margin-left: 5px;
-        padding: 5px 10px;
-        border-radius: 15px;
-    }
-
-    .delete-btn {
-        background-color: #f44336;
-        color: white;
-        font-weight: bold;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        margin-left: 5px;
-        padding: 5px 10px;
-        border-radius: 15px;
-    }
-
-    #charCount {
-        display: flex;
-        align-items: center;
-        margin-left: 10px;
-    }
-
-    .avatar-username-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-right: 10px;
-    }
-</style>

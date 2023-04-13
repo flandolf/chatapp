@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 70vh;
+    width: 100%;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.messages-container {
+    flex: 1;
+    overflow-y: scroll;
+    padding: 10px;
+}
+
+.message {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    overflow: hidden;
+    flex-wrap: wrap;
+}
+
+.username {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.message-text {
+    flex: 1;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    padding: 10px;
+}
+
+.input-box {
+    flex: 1;
+    padding: 5px;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.btn {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--primary);
+    color: var(--secondary);
+    height: 4vh;
+    padding-left: 2.4wh;
+    padding-right: 2.4wh;
+    border-radius: 45px;
+    width: 7vw;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: var(--secondary);
+    color: var(--primary);
+}
+
+.btn:active {
+    background-color: var(--primary);
+    color: var(--secondary);
+}
+
+.btn::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 50%;
+    transform: scale(1) translate(-50%, -50%);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.btn:active::after {
+    opacity: 1;
+    transform: scale(100) translate(-50%, -50%);
+    transition: opacity 0s, transform 0.3s;
+}
+
+#charCount {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.avatar-username-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}

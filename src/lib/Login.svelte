@@ -1,5 +1,7 @@
 <script lang="ts">
+    import { Button } from "@svelteuidev/core";
     import { currentUser, pb } from "./pocketbase";
+    import "../styles/Login.css";
     let username: string;
     let password: string;
 
@@ -44,69 +46,39 @@
 
 <div class="login-container">
     {#if $currentUser}
-        <p class="logged-in">
-            Logged in as <strong>{$currentUser.username}</strong>
-        </p>
-        <button class="logout-btn" on:click={logout}>Logout</button>
+        <div class="flex flex-row pl-4 items-center">
+            <p class="logged-i mr-5">
+                Logged in as <strong>{$currentUser.username}</strong>
+            </p>
+            <button class="login-btn" on:click={logout}>Logout</button>
+        </div>
     {:else}
-        <form on:submit|preventDefault class="buttons login-form">
-            <input
-                type="text"
-                placeholder="Username"
-                class="login-input"
-                bind:value={username}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                class="login-input"
-                bind:value={password}
-            />
-            <button class="login-button" on:click={login}>Login</button>
-            <button class="login-button" on:click={signUp}>Sign Up</button>
+        <form
+            on:submit|preventDefault
+            class="flex flex-col justify-center items-center w-screen m-0 p-0"
+        >
+            <div
+                class="flex flex-row justify-center items-center m-3 pl-4 pr-4 w-full"
+            >
+                <input
+                    type="text"
+                    placeholder="Username"
+                    class="login-input mr-2 p-3.5"
+                    style="width: 50%;"
+                    bind:value={username}
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    class="login-input p-3.5"
+                    style="width: 50%;"
+                    bind:value={password}
+                />
+            </div>
+            <div class="flex flex-row justify-center items-center p-0 w-full">
+                <button class="login-btn mr-2" on:click={login}>Login</button>
+                <button class="login-btn" on:click={signUp}>Sign Up</button>
+            </div>
         </form>
     {/if}
 </div>
-
-<style>
-    .login-container {
-        display: flex;
-        flex-direction: row;
-        height: 100%;
-        background-color: var(--bg-color);
-        color: var(--text-color);
-    }
-
-    .logout-btn {
-        border: none;
-        border-radius: 0.4rem;
-        background-color: #ff3e00;
-        color: white;
-        font-size: 1rem;
-        cursor: pointer;
-        height: 1.5rem;
-        align-self: center;
-        margin: 0.3rem;
-    }
-    input {
-        border: none;
-        border-radius: 0.4rem;
-        background-color: #f5f5f5;
-        color: #333;
-        font-size: 1rem;
-        padding: 0.5rem;
-        margin: 0.3rem;
-        height: 1.5rem;
-    }
-    Button {
-        border: none;
-        border-radius: 0.4rem;
-        background-color: #ff3e00;
-        color: white;
-        font-size: 1rem;
-        cursor: pointer;
-        height: 1.5rem;
-        align-self: center;
-        margin: 0.2rem;
-    }
-</style>
